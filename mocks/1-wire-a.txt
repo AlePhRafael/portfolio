@@ -1,0 +1,40 @@
++--------------------------------------------------+
+| nav                                              |
+| [t1: Aleph Rafael] [lnk: Sobre mim]                |
+| [lnk: Conhecimentos] [lnk: Vamos conversar]        |
++--------------------------------------------------+
+| hero                                             |
+| [t2: Aberto à primeira oportunidade]              |
+| [h1: Construindo na nuvem.]                       |
+| [h1: Pensando em segurança.]                      |
+| [t1: Apresentação demonstrativa]                  |
+| [btn: Vamos nos conectar] [btn2: GitHub]          |
+| +----------------------------------------------+ |
+| | media                                        | |
+| | [img: Ilustração decorativa de cloud]          | |
+| +----------------------------------------------+ |
++--------------------------------------------------+
+| section                                          |
+| [h2: Duas áreas. Muitas possibilidades.]          |
+| +---------------------+ +----------------------+ |
+| | card                | | card                 | |
+| | [h3: AWS Cloud]     | | [h3: Cibersegurança]  | |
+| | [t1: Descrição]     | | [t1: Descrição]       | |
+| +---------------------+ +----------------------+ |
+| +----------------------------------------------+ |
+| | rail                                         | |
+| | [t1: Python · Next.js · Tailwind CSS]          | |
+| +----------------------------------------------+ |
++--------------------------------------------------+
+| section                                          |
+| [h2: Curiosidade que vira aprendizado.]           |
+| [t1: Apresentação e objetivos de aprendizado]     |
++--------------------------------------------------+
+| section                                          |
+| [h2: Toda conexão pode ser um novo começo.]       |
+| [btn: Vamos nos conectar] [btn2: GitHub]          |
++--------------------------------------------------+
+| nav                                              |
+| [t1: Aleph Rafael] [lnk: LinkedIn] [lnk: GitHub]  |
+| [t2: Textos demonstrativos] [lnk: Voltar ao topo] |
++--------------------------------------------------+
