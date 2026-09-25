@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { BrandAvatar } from "./brand-avatar";
 import { Cloud, Code2, Database, Globe, LockKeyhole, Server, ShieldCheck } from "lucide-react";
 import type { Project } from "@/content/portfolio";
 
@@ -15,7 +16,7 @@ export function ProjectCover({ cover }: { cover: Project["cover"] }) {
           <div className="browser-art">
             <div className="browser-art-bar"><i /><i /><i /><span>aleph / portfólio</span></div>
             <div className="browser-art-body">
-              <span className="art-monogram">ar<span>.</span></span>
+              <BrandAvatar />
               <div className="art-headline">Cloud.<br /><span>Código. Conexões.</span></div>
               <div className="art-text-line" /><div className="art-text-line short" />
               <div className="art-button" />

@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { afterEach, test } from "node:test";
-import { cleanup, fireEvent, render, within } from "@testing-library/react";
+import { act, cleanup, fireEvent, render, within } from "@testing-library/react";
 import { ProjectCarousel } from "../components/project-carousel";
 import { CloudVisual } from "../components/cloud-visual";
 import { cloudDiagram, projects } from "../content/portfolio";
@@ -129,4 +129,96 @@ test("diagrama inicia em Infraestrutura e cada camada troca o texto e a seleçã
     assert.ok(status.textContent?.includes(node.security));
     assert.equal(button.getAttribute("aria-controls"), status.id);
   }
+});
+
+function autoplayEnvironment(t: { after: (callback: () => void) => void }, reduced = false) {
+  const originals = [
+    [document, "hidden"], [window, "matchMedia"], [window, "setTimeout"], [window, "clearTimeout"],
+  ] as const;
+  const descriptors = originals.map(([target, key]) => Object.getOwnPropertyDescriptor(target, key));
+  const timers = new Map<number, () => void>();
+  let id = 0;
+  Object.defineProperty(document, "hidden", { configurable: true, value: false });
+  Object.defineProperty(window, "matchMedia", { configurable: true, value: () => ({ matches: reduced, addEventListener() {}, removeEventListener() {} }) });
+  Object.defineProperty(window, "setTimeout", { configurable: true, value: (callback: () => void, delay: number) => {
+    assert.equal(delay, 6000);
+    timers.set(++id, callback);
+    return id;
+  } });
+  Object.defineProperty(window, "clearTimeout", { configurable: true, value: (timer: number) => timers.delete(timer) });
+  t.after(() => {
+    cleanup();
+    originals.forEach(([target, key], index) => {
+      if (descriptors[index]) Object.defineProperty(target, key, descriptors[index]!);
+      else Reflect.deleteProperty(target, key);
+    });
+  });
+  return {
+    timers,
+    tick() { act(() => { const callbacks = [...timers.values()]; timers.clear(); callbacks.forEach(callback => callback()); }); },
+    visibility(hidden: boolean) { act(() => {
+      Object.defineProperty(document, "hidden", { configurable: true, value: hidden });
+      document.dispatchEvent(new window.Event("visibilitychange"));
+    }); },
+  };
+}
+
+test("autoplay advances every six seconds, loops and cleans up", t => {
+  const env = autoplayEnvironment(t);
+  const view = render(<ProjectCarousel projects={projects} />);
+  assert.equal(env.timers.size, 1);
+  assert.equal(view.getByRole("status").getAttribute("aria-live"), "off");
+  for (let i = 1; i <= projects.length; i++) {
+    env.tick();
+    assert.ok(view.getByRole("heading", { name: projects[i % projects.length].title }));
+    assert.equal(env.timers.size, 1);
+  }
+  view.rerender(<ProjectCarousel projects={[projects[0]]} />);
+  assert.equal(env.timers.size, 0);
+  view.rerender(<ProjectCarousel projects={projects} />);
+  assert.equal(env.timers.size, 1);
+  view.unmount();
+  assert.equal(env.timers.size, 0);
+});
+
+test("autoplay pauses for interaction, visibility and explicit pause", t => {
+  const env = autoplayEnvironment(t);
+  const view = render(<ProjectCarousel projects={projects} />);
+  const region = view.getByRole("region");
+  fireEvent.mouseEnter(region);
+  assert.equal(env.timers.size, 0);
+  fireEvent.mouseLeave(region);
+  assert.equal(env.timers.size, 1);
+  fireEvent.focus(region);
+  assert.equal(env.timers.size, 0);
+  fireEvent.blur(region);
+  assert.equal(env.timers.size, 1);
+  fireEvent.touchStart(region, { touches: [{ clientX: 100, clientY: 100 }] });
+  assert.equal(env.timers.size, 0);
+  fireEvent.touchCancel(region);
+  assert.equal(env.timers.size, 1);
+  env.visibility(true);
+  assert.equal(env.timers.size, 0);
+  env.visibility(false);
+  assert.equal(env.timers.size, 1);
+  fireEvent.click(view.getByRole("button", { name: "Pausar projetos" }));
+  env.visibility(true);
+  env.visibility(false);
+  assert.equal(env.timers.size, 0);
+  fireEvent.click(view.getByRole("button", { name: "Retomar projetos" }));
+  assert.equal(env.timers.size, 1);
+});
+
+test("reduced motion starts with autoplay off and orbit has a pause control", t => {
+  const env = autoplayEnvironment(t, true);
+  const view = render(<ProjectCarousel projects={projects} />);
+  assert.equal(env.timers.size, 0);
+  fireEvent.click(view.getByRole("button", { name: "Retomar projetos" }));
+  assert.equal(env.timers.size, 1);
+  view.unmount();
+  const diagram = render(<CloudVisual />);
+  fireEvent.click(diagram.getByRole("button", { name: "Pausar órbita" }));
+  assert.equal(diagram.container.querySelector(".cloud-explorer")?.getAttribute("data-orbit-paused"), "true");
+  fireEvent.click(diagram.getByRole("button", { name: "Retomar órbita" }));
+  assert.equal(diagram.container.querySelector(".cloud-explorer")?.getAttribute("data-orbit-paused"), "false");
 });

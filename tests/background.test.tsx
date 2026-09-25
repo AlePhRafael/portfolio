@@ -187,8 +187,13 @@ test("fundo coexiste com carrossel, diagrama e links sociais", () => {
   const view = render(<><AnimatedBackground /><Home /></>);
   fireEvent.click(view.getByRole("button", { name: "Pausar fundo" }));
   const carousel = view.getByRole("region", { name: "Projetos em destaque" });
-  fireEvent.click(within(carousel).getByRole("button", { name: "Próximo projeto" }));
-  assert.ok(within(carousel).getByRole("heading", { name: "Infraestrutura cloud" }));
+  assert.ok(within(carousel).getByRole("heading", { name: "Portfólio pessoal" }));
+  assert.equal(within(carousel).queryAllByRole("button").length, 0);
+  assert.equal(within(carousel).queryByRole("heading", { name: "Infraestrutura cloud" }), null);
+  const studies = view.getByRole("region", { name: "Próximos estudos" });
+  assert.equal(within(studies).getAllByText("Planejado").length, 3);
+  assert.ok(within(studies).getByRole("heading", { name: "Infraestrutura cloud" }));
+  assert.equal(view.getByRole("link", { name: "Ver meu projeto" }).getAttribute("href"), "#projetos");
   fireEvent.click(view.getByRole("button", { name: "Monitoramento" }));
   assert.equal(view.getByRole("button", { name: "Monitoramento" }).getAttribute("aria-pressed"), "true");
   for (const link of view.getAllByRole("link", { name: /GitHub de Aleph Rafael/ })) assert.equal(link.getAttribute("href"), "https://github.com/AlePhRafael");
