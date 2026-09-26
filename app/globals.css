@@ -114,8 +114,8 @@ h2 { font-size: 29px; line-height: 1.25; letter-spacing: -1px; font-weight: 500;
 .toolbox-label > svg { color: #8396bb; }
 .tools-grid { display: grid; grid-template-columns: repeat(3, 1fr); width: 100%; gap: 20px; border-left: 1px solid #ffffff12; padding-left: 35px; }
 .tool { display: flex; align-items: center; gap: 12px; }
-.tool-mark { display: grid; place-items: center; width: 33px; height: 33px; background: #192131; color: #bbd0fb; border-radius: 7px; font-family: var(--font-mono); font-size: 15px; }
-.tailwind-mark { color: #77caee; font-size: 33px; line-height: 1; }
+.tool-mark { display: grid; place-items: center; flex-shrink: 0; width: 33px; height: 33px; background: #192131; color: #bbd0fb; border-radius: 7px; font-family: var(--font-mono); font-size: 15px; }
+.tool-mark > svg { display: block; flex-shrink: 0; }
 .tool h3 { font-size: 12px; font-weight: 500; }.tool p { font-size: 12px; color: #95a1b8; margin-top: 4px; }
 .about { display: grid; grid-template-columns: 1fr 1.15fr; gap: 90px; }
 .about h2 { max-width: 300px; font-size: 36px; margin-top: 16px; line-height: 1.25; }
@@ -322,4 +322,16 @@ button, a, .project-carousel { touch-action: manipulation; }
 .intro-loader i:nth-child(2) { animation-delay: .2s; }
 .intro-loader i:nth-child(3) { animation-delay: .4s; }
 @keyframes intro-pulse { from { opacity: .3; } to { opacity: 1; } }
+.scroll-reveal { min-width: 0; }
+.scroll-reveal-content { height: 100%; opacity: 1; transform: none; }
+.scroll-reveal-content > .study-card,
+.scroll-reveal-content > .skill-card { height: 100%; }
+@media (prefers-reduced-motion: no-preference) {
+  .scroll-reveal[data-reveal="visible"] > .scroll-reveal-content {
+    transition: opacity 500ms ease-out, transform 500ms cubic-bezier(.22, 1, .36, 1);
+  }
+  .scroll-reveal[data-reveal="below"] > .scroll-reveal-content { opacity: 0; transform: translateY(24px); }
+  .scroll-reveal[data-reveal="above"] > .scroll-reveal-content { opacity: 0; transform: translateY(-24px); }
+  .scroll-reveal:focus-within > .scroll-reveal-content { opacity: 1; transform: none; transition: none; }
+}
 @media (prefers-reduced-motion: reduce) { .site-intro { transition: none; } .intro-loader i { animation: none; } }

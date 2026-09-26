@@ -73,6 +73,14 @@ Com `prefers-reduced-motion`, a rede fica estática e o botão é ocultado. A re
 
 Os testes em `tests/background.test.tsx` verificam pausa, retomada, movimento reduzido, visibilidade, fallback, resolução, limites de conexões e quadros, cleanup e integração com as interações existentes. As dimensões do Canvas são verificadas em DOM simulado; contraste e sobreposições precisam de navegador real.
 
+## Entrada dos blocos ao rolar
+
+`components/scroll-reveal.tsx` anima os blocos abaixo da apresentação inicial com opacidade e deslocamento de 24 px durante 500 ms. A entrada acompanha a borda da tela: de baixo para cima ao avançar e de cima para baixo ao voltar. O efeito só é preparado novamente quando o bloco sai completamente da área visível.
+
+O observador acompanha um contêiner fixo no layout; a transformação é aplicada ao conteúdo interno, preservando o espaço dos blocos e as animações do carrossel. Foco por teclado revela o conteúdo imediatamente. Sem JavaScript, sem `IntersectionObserver` ou com movimento reduzido, o conteúdo permanece visível. A preferência de movimento também é acompanhada durante a visita.
+
+`tests/scroll-reveal.test.tsx` cobre reentrada nas duas direções, blocos maiores que a tela, foco, movimento reduzido, fallback e limpeza do observador. Conferir visualmente em navegador nas larguras de 320, 390, 768 e 1440 px, incluindo âncoras e rolagem rápida.
+
 ## Avatar e abertura
 
 O avatar em pixel art foi gerado com a ferramenta integrada `image_gen` e está em `public/brand/hooded-avatar.png`, com fundo transparente e resolução de 384 × 384. O favicon em `app/icon.png` deriva da mesma imagem. Cabeçalho, rodapé, imagem de compartilhamento e abertura usam essa identidade.

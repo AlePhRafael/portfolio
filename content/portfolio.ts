@@ -1,3 +1,7 @@
+import type { TechnologyIconName } from "@/components/technology-icon";
+
+type Technology = { name: string; icon: TechnologyIconName; description: string };
+
 export type Project = {
   id: string;
   title: string;
@@ -112,10 +116,14 @@ export const portfolio = {
     },
   ],
   tools: [
-    { name: "TypeScript", mark: "TS", description: "Tipos e componentes" },
-    { name: "Next.js", mark: "N", description: "Desenvolvimento web" },
-    { name: "Tailwind CSS", mark: "~", description: "Interfaces responsivas" },
-  ],
+    { name: "Next.js", icon: "nextjs", description: "Desenvolvimento web" },
+    { name: "React", icon: "react", description: "Interfaces com componentes" },
+    { name: "TypeScript", icon: "typescript", description: "Tipagem estática" },
+    { name: "JavaScript", icon: "javascript", description: "Interatividade e lógica" },
+    { name: "HTML", icon: "html", description: "Estrutura semântica" },
+    { name: "CSS", icon: "css", description: "Estilização e layouts" },
+    { name: "Tailwind CSS", icon: "tailwind", description: "Interfaces responsivas" },
+  ] satisfies Technology[],
   about: {
     title: "Começando por construir.",
     paragraphs: [

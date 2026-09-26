@@ -5,6 +5,9 @@ import { portfolio as p, projects } from "@/content/portfolio";
 import { BrandAvatar } from "@/components/brand-avatar";
 import { ProjectCarousel } from "@/components/project-carousel";
 
+import { TechnologyIcon } from "@/components/technology-icon";
+import { ScrollReveal } from "@/components/scroll-reveal";
+
 const external = { target: "_blank", rel: "noopener noreferrer" } as const;
 
 function SocialLinks({ compact = false }: { compact?: boolean }) {
@@ -42,40 +45,40 @@ export default function Home() {
       </section>
 
       <section id="projetos" className="container projects section-space" aria-labelledby="projects-title">
-        <div className="section-heading"><div><p className="eyebrow"><span>01 /</span> PROJETOS</p><h2 id="projects-title">O que já construí.</h2></div><p>Meu primeiro projeto, da interface<br className="desktop-break" /> aos testes de interação.</p></div>
-        <ProjectCarousel projects={realProjects} />
+        <ScrollReveal><div className="section-heading"><div><p className="eyebrow"><span>01 /</span> PROJETOS</p><h2 id="projects-title">O que já construí.</h2></div><p>Meu primeiro projeto, da interface<br className="desktop-break" /> aos testes de interação.</p></div></ScrollReveal>
+        <ScrollReveal><ProjectCarousel projects={realProjects} /></ScrollReveal>
         {plannedProjects.length > 0 && <section className="planned-studies" aria-labelledby="studies-title">
-          <div className="studies-heading"><h3 id="studies-title">Próximos estudos</h3><p>Ideias planejadas para praticar. Estes laboratórios ainda não foram realizados.</p></div>
-          <div className="study-grid">{plannedProjects.map(project => <article className="study-card" key={project.id}>
+          <ScrollReveal><div className="studies-heading"><h3 id="studies-title">Próximos estudos</h3><p>Ideias planejadas para praticar. Estes laboratórios ainda não foram realizados.</p></div></ScrollReveal>
+          <div className="study-grid">{plannedProjects.map(project => <ScrollReveal key={project.id}><article className="study-card">
             <p className="study-status">Planejado</p><h4>{project.title}</h4><p>{project.description}</p>
             <div className="tags">{project.technologies.map(technology => <span key={technology}>{technology}</span>)}</div>
-          </article>)}</div>
+          </article></ScrollReveal>)}</div>
         </section>}
       </section>
 
       <section id="conhecimentos" className="knowledge section-border" aria-labelledby="knowledge-title">
         <div className="container section-space">
-          <div className="section-heading"><div><p className="eyebrow"><span>02 /</span> CONHECIMENTOS</p><h2 id="knowledge-title">Minha base e meus próximos passos.</h2></div><p>Ferramentas usadas neste site<br className="desktop-break" /> e temas que quero estudar.</p></div>
-          <div className="toolbox"><div className="toolbox-label"><Terminal size={17} /><span>Utilizado<br />neste projeto</span></div><div className="tools-grid">{p.tools.map(tool => <div className="tool" key={tool.name}><span className={`tool-mark ${tool.name === "Tailwind CSS" ? "tailwind-mark" : ""}`}>{tool.mark}</span><div><h3>{tool.name}</h3><p>{tool.description}</p></div></div>)}</div></div>
-          <h3 className="interests-title">Interesses de estudo</h3>
+          <ScrollReveal><div className="section-heading"><div><p className="eyebrow"><span>02 /</span> CONHECIMENTOS</p><h2 id="knowledge-title">Minha base e meus próximos passos.</h2></div><p>Tecnologias que domino<br className="desktop-break" /> e temas que quero estudar.</p></div></ScrollReveal>
+          <ScrollReveal><div className="toolbox"><div className="toolbox-label"><Terminal size={17} /><span>Tecnologias<br />que domino</span></div><div className="tools-grid">{p.tools.map(tool => <div className="tool" key={tool.name}><span className="tool-mark"><TechnologyIcon name={tool.icon} /></span><div><h3>{tool.name}</h3><p>{tool.description}</p></div></div>)}</div></div></ScrollReveal>
+          <ScrollReveal><h3 className="interests-title">Interesses de estudo</h3></ScrollReveal>
           <div className="grid gap-5 md:grid-cols-2">
-            {p.skills.map((skill) => { const Icon = skill.icon === "cloud" ? Cloud : ShieldCheck; return <article className="skill-card" key={skill.name}>
+            {p.skills.map((skill) => { const Icon = skill.icon === "cloud" ? Cloud : ShieldCheck; return <ScrollReveal key={skill.name}><article className="skill-card">
               <div className="flex items-start justify-between"><span className="skill-icon"><Icon size={27} strokeWidth={1.5} /></span><span className="card-number">{skill.number}</span></div>
               <p className="card-category">{skill.category}</p><h3>{skill.name}</h3><p className="card-description">{skill.description}</p>
               <div className="tags">{skill.tags.map(tag => <span key={tag}>{tag}</span>)}</div>
-            </article>; })}
+            </article></ScrollReveal>; })}
           </div>
 
         </div>
       </section>
 
       <section id="sobre" className="container about section-space" aria-labelledby="about-title">
-        <div><p className="eyebrow"><span>03 /</span> SOBRE MIM</p><h2 id="about-title">{p.about.title}</h2><div className="about-signature"><span className="signature-line" /><span>{p.name}<small>EM CONSTANTE EVOLUÇÃO</small></span></div></div>
-        <div className="about-copy">{p.about.paragraphs.map(paragraph => <p key={paragraph}>{paragraph}</p>)}<div className="about-note"><span><Check size={17} /></span><p>{p.about.note}</p></div></div>
+        <ScrollReveal><div><p className="eyebrow"><span>03 /</span> SOBRE MIM</p><h2 id="about-title">{p.about.title}</h2><div className="about-signature"><span className="signature-line" /><span>{p.name}<small>EM CONSTANTE EVOLUÇÃO</small></span></div></div></ScrollReveal>
+        <ScrollReveal><div className="about-copy">{p.about.paragraphs.map(paragraph => <p key={paragraph}>{paragraph}</p>)}<div className="about-note"><span><Check size={17} /></span><p>{p.about.note}</p></div></div></ScrollReveal>
       </section>
 
       <section id="contato" className="container contact-wrap" aria-labelledby="contact-title">
-        <div className="contact-panel"><div className="contact-decoration" aria-hidden="true" /><div className="contact-content"><p className="eyebrow"><span>04 /</span> VAMOS CONVERSAR</p><h2 id="contact-title">{p.contact.title}</h2><p className="contact-description">{p.contact.description}</p><SocialLinks /></div><ArrowUpRight className="contact-arrow" strokeWidth={0.8} aria-hidden="true" /></div>
+        <ScrollReveal><div className="contact-panel"><div className="contact-decoration" aria-hidden="true" /><div className="contact-content"><p className="eyebrow"><span>04 /</span> VAMOS CONVERSAR</p><h2 id="contact-title">{p.contact.title}</h2><p className="contact-description">{p.contact.description}</p><SocialLinks /></div><ArrowUpRight className="contact-arrow" strokeWidth={0.8} aria-hidden="true" /></div></ScrollReveal>
       </section>
     </main>
     <footer className="container site-footer"><div className="footer-main"><a className="brand" href="#inicio" aria-label="Voltar ao início"><BrandAvatar /><span className="footer-name">{p.name}<small>Cloud e infraestrutura · Em formação.</small></span></a><SocialLinks compact /></div><div className="footer-bottom"><p>{p.footerNote}</p><a href="#inicio">Voltar ao topo <ArrowRight size={13} className="-rotate-90" /></a></div></footer>
