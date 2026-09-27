@@ -5,7 +5,14 @@ import type { Project } from "@/content/portfolio";
 
 export function ProjectCover({ cover }: { cover: Project["cover"] }) {
   if (cover.image) {
-    return <div className="project-cover project-cover-image"><Image src={cover.image} alt={cover.alt} fill sizes="(max-width: 800px) 100vw, 560px" /></div>;
+    return <div className="project-cover project-cover-image">
+      <div className="cover-grid" aria-hidden="true" />
+      <div className="project-browser">
+        <div className="project-browser-bar" aria-hidden="true"><span className="browser-dots"><i /><i /><i /></span><span>prévia do projeto</span><Globe size={14} /></div>
+        <div className="project-browser-screen"><Image src={cover.image} alt={cover.alt} fill sizes="(max-width: 800px) 90vw, 500px" /></div>
+      </div>
+      <span className="cover-caption" aria-hidden="true">INTERFACE · CÓDIGO · CONEXÕES</span>
+    </div>;
   }
 
   return (

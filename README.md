@@ -51,7 +51,7 @@ Com dois ou mais projetos reais, o carrossel alterna a cada 6 segundos em loop. 
 
 ## Diagrama e compartilhamento
 
-As explicações do diagrama ficam no objeto `cloudDiagram`, no mesmo arquivo de conteúdo. É uma arquitetura conceitual educativa, sem conexão com uma conta AWS ou serviços reais. A órbita dura 15 segundos, pausa com hover, foco ou controle de pausa e fica estática com movimento reduzido.
+As explicações do diagrama ficam no objeto `cloudDiagram`, no mesmo arquivo de conteúdo. É uma arquitetura conceitual educativa, sem conexão com uma conta AWS ou serviços reais. A órbita gira continuamente, com uma volta a cada 15 segundos, sem pausar por hover, foco ou seleção das camadas e sem controle de pausa. Por decisão visual, ela também continua com movimento reduzido; as demais animações preservam essa preferência. O navegador ainda pode suspender animações em abas ocultas ou quando o dispositivo estiver suspenso.
 
 `app/opengraph-image.tsx` gera uma imagem PNG de 1200 × 630 com fontes locais. Antes da publicação, copie `.env.example` para `.env.local` e configure `SITE_URL` com a URL pública real, incluindo `https://`. O valor local padrão é `http://localhost:3000`. Refaça o build depois da alteração. Revise o conteúdo e os links antes de habilitar a indexação.
 

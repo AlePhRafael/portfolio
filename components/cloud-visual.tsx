@@ -1,21 +1,20 @@
 "use client";
 
 import { useId, useState } from "react";
-import { Activity, Cloud, Code2, LockKeyhole, Pause, Play, ShieldCheck } from "lucide-react";
+import { Activity, Cloud, Code2, LockKeyhole, ShieldCheck } from "lucide-react";
 import { cloudDiagram } from "@/content/portfolio";
 
 const icons = { code: Code2, cloud: Cloud, lock: LockKeyhole, activity: Activity };
 
 export function CloudVisual() {
   const [selected, setSelected] = useState<string>("infrastructure");
-  const [paused, setPaused] = useState(false);
   const id = useId();
   const node = cloudDiagram.nodes.find(item => item.id === selected) ?? cloudDiagram.nodes[1];
 
   return (
-    <section className="cloud-explorer" data-orbit-paused={paused} aria-labelledby={`${id}-title`}>
+    <section className="cloud-explorer" aria-labelledby={`${id}-title`}>
+      <div className="explorer-toolbar"><span className="panel-indicator" aria-hidden="true" />Arquitetura conceitual<span className="panel-index" aria-hidden="true">01 — 04</span></div>
       <div className="explorer-heading"><p className="eyebrow">CLOUD & SEGURANÇA</p><h2 id={`${id}-title`}>{cloudDiagram.title}</h2><p>{cloudDiagram.hint}</p></div>
-      <button type="button" className="motion-toggle orbit-toggle" onClick={() => setPaused(value => !value)}>{paused ? <Play size={15} aria-hidden="true" /> : <Pause size={15} aria-hidden="true" />}{paused ? "Retomar órbita" : "Pausar órbita"}</button>
       <div className="cloud-visual">
         <div className="visual-grid" aria-hidden="true" />
         <div className="orbit orbit-outer" aria-hidden="true" />

@@ -78,7 +78,7 @@ export default function Home() {
       </section>
 
       <section id="contato" className="container contact-wrap" aria-labelledby="contact-title">
-        <ScrollReveal><div className="contact-panel"><div className="contact-decoration" aria-hidden="true" /><div className="contact-content"><p className="eyebrow"><span>04 /</span> VAMOS CONVERSAR</p><h2 id="contact-title">{p.contact.title}</h2><p className="contact-description">{p.contact.description}</p><SocialLinks /></div><ArrowUpRight className="contact-arrow" strokeWidth={0.8} aria-hidden="true" /></div></ScrollReveal>
+        <ScrollReveal><div className="contact-panel"><svg className="contact-network" viewBox="0 0 360 320" fill="none" aria-hidden="true"><path d="M36 160H132L212 80H324M132 160L212 240H324M212 80V240M212 160H324" /><circle cx="36" cy="160" r="6" /><circle cx="132" cy="160" r="9" /><circle cx="212" cy="80" r="6" /><circle cx="212" cy="240" r="6" /><circle cx="324" cy="80" r="4" /><circle cx="324" cy="160" r="4" /><circle cx="324" cy="240" r="4" /></svg><div className="contact-content"><p className="eyebrow"><span>04 /</span> VAMOS CONVERSAR</p><h2 id="contact-title">{p.contact.title}</h2><p className="contact-description">{p.contact.description}</p><SocialLinks /></div></div></ScrollReveal>
       </section>
     </main>
     <footer className="container site-footer"><div className="footer-main"><a className="brand" href="#inicio" aria-label="Voltar ao início"><BrandAvatar /><span className="footer-name">{p.name}<small>Cloud e infraestrutura · Em formação.</small></span></a><SocialLinks compact /></div><div className="footer-bottom"><p>{p.footerNote}</p><a href="#inicio">Voltar ao topo <ArrowRight size={13} className="-rotate-90" /></a></div></footer>

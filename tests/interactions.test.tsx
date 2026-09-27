@@ -209,7 +209,7 @@ test("autoplay pauses for interaction, visibility and explicit pause", t => {
   assert.equal(env.timers.size, 1);
 });
 
-test("reduced motion starts with autoplay off and orbit has a pause control", t => {
+test("reduced motion starts with autoplay off while cloud layers remain selectable without a pause control", t => {
   const env = autoplayEnvironment(t, true);
   const view = render(<ProjectCarousel projects={projects} />);
   assert.equal(env.timers.size, 0);
@@ -217,8 +217,9 @@ test("reduced motion starts with autoplay off and orbit has a pause control", t 
   assert.equal(env.timers.size, 1);
   view.unmount();
   const diagram = render(<CloudVisual />);
-  fireEvent.click(diagram.getByRole("button", { name: "Pausar órbita" }));
-  assert.equal(diagram.container.querySelector(".cloud-explorer")?.getAttribute("data-orbit-paused"), "true");
-  fireEvent.click(diagram.getByRole("button", { name: "Retomar órbita" }));
-  assert.equal(diagram.container.querySelector(".cloud-explorer")?.getAttribute("data-orbit-paused"), "false");
+  assert.equal(diagram.queryByRole("button", { name: /órbita/i }), null);
+  const application = diagram.getByRole("button", { name: "Aplicação" });
+  fireEvent.click(application);
+  assert.equal(application.getAttribute("aria-pressed"), "true");
+  assert.ok(diagram.getByRole("heading", { name: "Aplicação" }));
 });
